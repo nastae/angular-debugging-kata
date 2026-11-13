@@ -1,0 +1,29 @@
+<div class="sidebar-container">
+    <div class="logo-section">
+        <mat-icon class="logo-icon">
+            code
+        </mat-icon>
+
+        <div class="title">
+            Angular Debugging Kata
+        </div>
+    </div>
+
+    <nav class="menu">
+        @for (item of menuItems; track item.route) {
+            <a
+                class="menu-item"
+                [routerLink]="item.route"
+                routerLinkActive="active"
+                [routerLinkActiveOptions]="{ exact: true }">
+                <mat-icon>
+                    {{ item.icon }}
+                </mat-icon>
+
+                <span>
+                    {{ item.label }}
+                </span>
+            </a>
+        }
+    </nav>
+</div>

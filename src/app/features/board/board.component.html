@@ -1,0 +1,281 @@
+<div class="board-page">
+
+    <div class="page-header">
+        <h2>Board</h2>
+    </div>
+
+    <div class="board-toolbar">
+        <mat-form-field
+            appearance="outline"
+            class="project-select">
+
+            <mat-label>Project</mat-label>
+
+            <mat-select
+                [value]="selectedProject()"
+                (valueChange)="selectedProject.set($event)">
+
+                @for (project of projects(); track project.id) {
+
+                    <mat-option [value]="project.id">
+                        {{ project.key }} - {{ project.name }}
+                    </mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="board"
+        cdkDropListGroup>
+
+        <div class="board-column">
+
+            <div class="column-header">
+                <span class="column-title status-todo">TO DO</span>
+
+                <span class="issue-count">
+                    {{ issuesByStatus()['Todo'].length }}
+                </span>
+            </div>
+
+            <div 
+                class="issue-list"
+                cdkDropList
+                [cdkDropListData]="issuesByStatus()['Todo']"
+                (cdkDropListDropped)="drop($event, 'Todo')">
+
+                @for (issue of issuesByStatus()['Todo']; track issue.id) {
+                    <div 
+                        class="issue-card"
+                        cdkDrag>
+                        <div class="issue-key">
+                            {{ issue.key }}
+                        </div>
+
+                        <div class="issue-summary">
+                            {{ issue.summary }}
+                        </div>
+
+                        <div class="issue-card-footer">
+                            <span 
+                                class="issue-type"
+                                [class.issue-type-bug]="issue.type === 'Bug'"
+                                [class.issue-type-story]="issue.type === 'Story'"
+                                [class.issue-type-task]="issue.type === 'Task'"
+                                [class.issue-type-epic]="issue.type === 'Epic'">
+                                {{ issue.type }}
+                            </span>
+
+                            @if (issue.assigneeId; as assigneeId) {
+                                @if (usersById().get(assigneeId); as assignee) {
+                                    <app-avatar
+                                        [url]="assignee.avatarUrl"
+                                        [name]="assignee.fullName"
+                                        [size]="'sm'"
+                                    />
+                                }
+                            }
+                        </div>
+                    </div>
+                }
+
+                @if (issuesByStatus()['Todo'].length === 0) {
+                    <div class="empty-state">
+                        Drop issues here
+                    </div>
+                }
+            </div>
+
+            <button
+                mat-button
+                class="create-issue-link"
+                (click)="createIssue()">
+                <mat-icon>add</mat-icon>
+                Create issue
+            </button>
+        </div>
+        
+        <div class="board-column">
+
+            <div class="column-header">
+                <span class="column-title">IN PROGRESS</span>
+
+                <span class="issue-count">
+                    {{ issuesByStatus()['In Progress'].length }}
+                </span>
+            </div>
+
+            <div 
+                class="issue-list"
+                cdkDropList
+                [cdkDropListData]="issuesByStatus()['In Progress']"
+                (cdkDropListDropped)="drop($event, 'In Progress')">
+
+                @for (issue of issuesByStatus()['In Progress']; track issue.id) {
+                    <div
+                        class="issue-card"
+                        cdkDrag>
+
+                        <div class="issue-key">
+                            {{ issue.key }}
+                        </div>
+
+                        <div class="issue-summary">
+                            {{ issue.summary }}
+                        </div>
+
+                        <div class="issue-card-footer">
+                            <span 
+                                class="issue-type"
+                                [class.issue-type-bug]="issue.type === 'Bug'"
+                                [class.issue-type-story]="issue.type === 'Story'"
+                                [class.issue-type-task]="issue.type === 'Task'"
+                                [class.issue-type-epic]="issue.type === 'Epic'">
+                                {{ issue.type }}
+                            </span>
+
+                            @if (issue.assigneeId; as assigneeId) {
+                                @if (usersById().get(assigneeId); as assignee) {
+                                    <app-avatar
+                                        [url]="assignee.avatarUrl"
+                                        [name]="assignee.fullName"
+                                        [size]="'sm'"
+                                    />
+                                }
+                            }
+                        </div>
+
+                    </div>
+                }
+
+            </div>
+
+        </div>
+
+        <div class="board-column">
+
+            <div class="column-header">
+                <span class="column-title">IN REVIEW</span>
+
+                <span class="issue-count">
+                    {{ issuesByStatus()['In Review'].length}}
+                </span>
+            </div>
+
+            <div
+                class="issue-list"
+                cdkDropList
+                [cdkDropListData]="issuesByStatus()['In Review']"
+                (cdkDropListDropped)="drop($event, 'In Review')">
+
+                @for (issue of issuesByStatus()['In Review']; track issue.id) {
+
+                    <div class="issue-card"
+                    cdkDrag>
+
+                        <div class="issue-key">
+                            {{ issue.key }}
+                        </div>
+
+                        <div class="issue-summary">
+                            {{ issue.summary }}
+                        </div>
+
+                        <div class="issue-card-footer">
+                            <div 
+                                class="issue-type"
+                                [class.issue-type-bug]="issue.type === 'Bug'"
+                                [class.issue-type-story]="issue.type === 'Story'"
+                                [class.issue-type-task]="issue.type === 'Task'"
+                                [class.issue-type-epic]="issue.type === 'Epic'">
+                                {{ issue.type }}
+                            </div>
+
+                            @if (issue.assigneeId; as assigneeId) {
+                                @if (usersById().get(assigneeId); as assignee) {
+                                    <app-avatar
+                                        [url]="assignee.avatarUrl"
+                                        [name]="assignee.fullName"
+                                        [size]="'sm'"
+                                    />
+                                }
+                            }
+                        </div>
+
+                    </div>
+
+                }
+            </div>
+
+        </div>
+
+        <div class="board-column">
+
+            <div class="column-header">
+                <span class="column-title status-done">DONE</span>
+
+                <span class="issue-count">
+                    {{ issuesByStatus()['Done'].length }}
+                </span>
+            </div>
+
+            <div 
+                class="issue-list"
+                cdkDropList
+                [cdkDropListData]="issuesByStatus()['Done']"
+                (cdkDropListDropped)="drop($event, 'Done')">
+
+                @for (issue of visibleIssuesByStatus()['Done']; track issue.id) {
+
+                    <div
+                        class="issue-card"
+                        cdkDrag>
+
+                        <div class="issue-key">
+                            {{ issue.key }}
+                        </div>
+
+                        <div class="issue-summary">
+                            {{ issue.summary }}
+                        </div>
+
+                        <div class="issue-card-footer">
+                            <span 
+                                class="issue-type"
+                                [class.issue-type-bug]="issue.type === 'Bug'"
+                                [class.issue-type-story]="issue.type === 'Story'"
+                                [class.issue-type-task]="issue.type === 'Task'"
+                                [class.issue-type-epic]="issue.type === 'Epic'">
+                                {{ issue.type }}
+                            </span>
+
+                            @if (issue.assigneeId; as assigneeId) {
+                                @if (usersById().get(assigneeId); as assignee) {
+                                    <app-avatar
+                                        [url]="assignee.avatarUrl"
+                                        [name]="assignee.fullName"
+                                        [size]="'sm'"
+                                    />
+                                }
+                            }
+                        </div>
+
+                    </div>
+
+                }
+
+            </div>
+
+            @if (doneVisibleCount() < issuesByStatus()['Done'].length) {
+                <button
+                    mat-button
+                    class="create-issue-link"
+                    (click)="showMoreDoneIssues()">
+                    <mat-icon>add</mat-icon>
+                    {{ getRemainingDoneIssuesText() }}
+                </button>
+            }
+
+        </div>
+    </div>
+</div>

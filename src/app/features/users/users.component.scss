@@ -1,0 +1,200 @@
+:host {
+    display: block
+}
+
+.users-page {
+    padding: 24px;
+    min-height: 100%;
+}
+
+.statistics-grid {
+    display: grid;
+
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    gap: 16px;
+
+    margin-bottom: 20px;
+}
+
+.stat-card {
+    min-height: 100px;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    gap: 16px;
+
+    padding: 20px;
+
+    background: #fff;
+
+    border: 1px solid #e4e9f0;
+    border-radius: 6px;
+
+    box-shadow: none;
+}
+
+.stat-icon {
+    width: 48px;
+    height: 48px;
+
+    flex: 0 0 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    mat-icon {
+        font-size: 25px;
+        width: 25px;
+        height: 25px;
+    }
+}
+
+.total-icon {
+    background: #e8f0ff;
+    color: #1463df;
+}
+
+.assigned-icon {
+    background: #e5f8ed;
+    color: #16a34a;
+}
+
+.most-assigned-icon {
+    background: #f0e8ff;
+    color: #7c3aed;
+}
+
+.active-icon {
+    background: #e4f7fc;
+    color: #0284c7;
+}
+
+.stat-content {
+    min-width: 0;
+}
+
+.stat-label {
+    margin-bottom: 8px;
+
+    font-size: 13px;
+    font-weight: 450;
+    line-height: 18px;
+
+    color: #61708a;
+}
+
+.stat-value {
+    font-size: 24px;
+    line-height: 28px;
+
+    font-weight: 600;
+
+    color: #172b4d;
+}
+
+.stat-user-name {
+    overflow: hidden;
+
+    font-size: 17px;
+    line-height: 22px;
+
+    font-weight: 600;
+
+    color: #172b4d;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.stat-secondary {
+    margin-top: 3px;
+
+    font-size: 12px;
+    color: #61708a;
+}
+
+.users-table-card {
+    background: #fff;
+
+    border: 1px solid #e4e9f0;
+    border-radius: 6px;
+
+    overflow: hidden;
+}
+
+.table-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding: 14px 16px;
+
+    border-bottom: 1px solid #e4e9f0;
+}
+
+.search-field {
+    width: 570px;
+
+    margin: 0;
+}
+
+.filter-field {
+    width: 160px;
+    margin: 0;
+
+    ::ng-deep .mat-mdc-text-field-wrapper {
+        align-items: center !important;
+        height: 44px !important;
+        padding-bottom: 0 !important;
+    }
+
+    ::ng-deep .mat-mdc-form-field-flex {
+        height: 100% !important;
+        align-items: center !important;
+    }
+}
+
+.app-table-container {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+
+    background: #fff;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+}
+
+.user-name {
+    font-weight: 500;
+    color: #273446;
+}
+
+.user-email {
+    color: #445673;
+}
+
+.issue-count {
+    color: #172b4d;
+    font-weight: 500;
+}
+
+.issue-count.no-issues {
+    color: #8a96a8;
+}

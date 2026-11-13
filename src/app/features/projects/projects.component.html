@@ -1,0 +1,138 @@
+<div class="projects-page">
+    
+    <div class="page-header">
+        <h2>Projects</h2>
+
+        <button 
+            mat-flat-button
+            class="app-primary-button"
+            (click)="openCreateProjectDialog()">
+            <mat-icon>add</mat-icon>
+            Create Project
+        </button>
+    </div>
+
+    <div class="app-table-container">
+        <table mat-table [dataSource]="paginatedRows()" class="mat-shadow-2">
+
+        <ng-container matColumnDef="key">
+            <th mat-header-cell *matHeaderCellDef>
+                Key
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                {{ row.key }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef>
+                Name
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                {{ row.name }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lead">
+            <th mat-header-cell *matHeaderCellDef>
+                Lead
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                <div class="app-user-cell">
+                    <app-avatar
+                        [url]="row.lead.avatarUrl"
+                        [name]="row.lead.fullName"
+                        [size]="'lg'"
+                    />
+
+                    {{ row.lead.fullName }}
+                </div>
+            </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="issues">
+            <th mat-header-cell *matHeaderCellDef>
+                Issues
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                {{ row.issueCount }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+            <th mat-header-cell *matHeaderCellDef>
+                Created
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                {{ row.createdAt | date }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            
+            <th mat-header-cell *matHeaderCellDef>
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                <button mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    (click)="$event.stopPropagation()">
+                    <mat-icon>
+                        more_vert
+                    </mat-icon>
+                </button>
+
+                <mat-menu #menu="matMenu">
+                    <button 
+                        mat-menu-item
+                        (click)="openProjectDetails(row.id)"
+                    >
+                        Open
+                    </button>
+
+                    <button 
+                        mat-menu-item
+                        (click)="openEditProjectDialog(row)"
+                    >
+                        Edit {{ row.key }}
+                    </button>
+
+                    <button 
+                        mat-menu-item
+                        (click)="openDeleteProjectDialog(row)"
+                    >
+                        Delete
+                    </button>
+                </mat-menu>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="displayedColumns">
+        </tr>
+
+        <tr mat-row
+            *matRowDef="let row; columns: displayedColumns;"
+            (click)="openProject(row)">
+        </tr>
+    </table>
+    </div>
+
+    <app-table-footer
+        [start]="startProjectIndex()"
+        [end]="endProjectIndex()"
+        [total]="totalProjects()"
+        itemName="projects"
+    />
+
+    <app-pagination-controls
+        [currentPage]="effectivePage()"
+        [totalPages]="totalPages()"
+        (pageChange)="currentPage.set($event)"
+    />
+</div>

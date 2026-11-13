@@ -1,0 +1,287 @@
+<div class="page-header">
+    <h2>
+        Issues
+    </h2>
+
+    <button 
+        mat-flat-button
+        class="app-primary-button"
+        (click)="openCreateIssueDialog()">
+        <mat-icon>add</mat-icon>
+        Create Issue
+    </button>
+</div>
+
+<div class="issue-filters">
+
+    <mat-form-field appearance="outline"
+        class="filter-field">
+        <mat-label>Project</mat-label>
+
+        <mat-select 
+            [value]="selectedProject()"
+            (selectionChange)="selectedProject.set($event.value); resetPagination();"
+        >
+
+            <mat-option value="">
+                All
+            </mat-option>
+
+            @for (project of projects(); track project.id) {
+                <mat-option [value]="project.id.toString()">
+                    {{ project.key }}
+                </mat-option>
+            }
+            </mat-select>
+        
+    </mat-form-field>
+
+    <mat-form-field appearance="outline"
+        class="filter-field">
+        <mat-label>Status</mat-label>
+
+        <mat-select 
+            [value]="selectedStatus()"
+            (selectionChange)="selectedStatus.set($event.value); resetPagination();"
+        >
+
+            <mat-option value="">
+                All
+            </mat-option>
+
+            @for (status of statusFilterOptions; track status) {
+                <mat-option [value]="status">
+                    {{ status }}
+                </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline"
+        class="filter-field">
+        <mat-label>Type</mat-label>
+
+        <mat-select 
+            [value]="selectedType()"
+            (selectionChange)="selectedType.set($event.value); resetPagination();"
+        >
+
+            <mat-option value="">
+                All
+            </mat-option>
+
+            @for (type of typeFilterOptions; track type) {
+                <mat-option [value]="type">
+                    {{ type }}
+                </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline"
+        class="filter-field">
+        <mat-label>Priority</mat-label>
+
+        <mat-select 
+            [value]="selectedPriority()"
+            (selectionChange)="selectedPriority.set($event.value); resetPagination();"
+        >
+
+            <mat-option value="">
+                All
+            </mat-option>
+
+            @for (priority of priorityFilterOptions; track priority) {
+                <mat-option [value]="priority">
+                    {{ priority }}
+                </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline"
+        class="filter-field">
+        <mat-label>Assignee</mat-label>
+
+        <mat-select 
+            [value]="selectedAssignee()"
+            (selectionChange)="selectedAssignee.set($event.value); resetPagination();"
+        >
+
+            <mat-option value="">
+                All
+            </mat-option>
+
+            @for (user of users(); track user.id) {
+                <mat-option [value]="user.id">
+                    {{ user.fullName }}
+                </mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+
+    <button
+        mat-button
+        (click)="clearFilters()">
+        Clear filters
+    </button>
+</div>
+
+<div class="app-table-container">
+    <table mat-table [dataSource]="paginatedRows()">
+
+        <ng-container matColumnDef="key">
+
+            <th mat-header-cell *matHeaderCellDef class="key-column">
+                Key
+            </th>
+
+            <td mat-cell *matCellDef="let row" class="key-column">
+                {{ row.key }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="summary">
+            
+            <th mat-header-cell *matHeaderCellDef>
+                Summary
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                {{ row.summary }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            
+            <th mat-header-cell *matHeaderCellDef>
+                Status 
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                {{ row.status }} 
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="type">
+
+            <th mat-header-cell *matHeaderCellDef>
+                Type
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                {{ row.type }}
+            </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="priority">
+
+            <th mat-header-cell *matHeaderCellDef>
+                Priority
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                {{ row.priority }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="assignee">
+
+            <th mat-header-cell *matHeaderCellDef>
+                Assignee
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+            
+                <div class="app-user-cell">
+                    @if (row.assignee) {
+                        <app-avatar
+                            [url]="row.assignee.avatarUrl"
+                            [name]="row.assignee.fullName"
+                            [size]="'lg'"
+                        />
+
+                        {{ row.assignee.fullName }}
+                    } @else {
+                        Unassigned
+                    }
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="updatedAt">
+            
+            <th mat-header-cell *matHeaderCellDef>
+                Updated
+            </th>
+
+            <td mat-cell *matCellDef="let row">
+                {{ row.updatedAt | date }}
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            
+            <th mat-header-cell *matHeaderCellDef></th>
+        
+            <td mat-cell *matCellDef="let row">
+                <button
+                    mat-icon-button
+                    [matMenuTriggerFor]="menu"
+                    (click)="$event.stopPropagation()">
+                    <mat-icon>
+                        more_vert
+                    </mat-icon>
+                </button>
+
+                <mat-menu #menu="matMenu">
+
+                    <button 
+                        mat-menu-item
+                        (click)="openIssue(row.id)"
+                    >
+                        Open
+                    </button>
+
+                    <button 
+                        mat-menu-item
+                        (click)="openEditIssueDialog(row)"
+                    >
+                        Edit {{ row.key }}
+                    </button>
+
+                    <button 
+                        mat-menu-item
+                        (click)="openDeleteIssueDialog(row)"
+                    >
+                        Delete
+                    </button>
+                </mat-menu>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row
+            *matHeaderRowDef="displayedColumns">
+        </tr>
+
+        <tr mat-row
+            *matRowDef="let row; columns: displayedColumns"
+            (click)="openIssue(row.id)"
+            class="clickable-row"    
+        >
+        </tr>
+    </table>
+</div>
+
+<app-table-footer
+    [start]="startIssueIndex()",
+    [end]="endIssueIndex()",
+    [total]="totalIssues()",
+    itemName="issues"    
+/>
+
+<app-pagination-controls
+    [currentPage]="effectivePage()"
+    [totalPages]="totalPages()"
+    (pageChange)="currentPage.set($event)"
+/>

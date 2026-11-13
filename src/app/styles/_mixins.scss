@@ -1,0 +1,13 @@
+@mixin clickable-table-row {
+    cursor: pointer;
+
+    transition: background-color 150ms ease;
+
+    background-color: #fefefe;
+
+    border: 1px solid;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.04);
+    }
+}

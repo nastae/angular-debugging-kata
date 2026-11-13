@@ -1,0 +1,355 @@
+@let item = issue();
+@let assignedUser = assignee();
+@let reporterUser = reporter();
+<div class="issue-details-page">
+
+    <div class="breadcrumb">
+
+        <button
+            type="button"
+            class="breadcrumb-link"
+            (click)="goToIssues()"
+        >
+            Issues
+        </button>
+
+        <mat-icon>chevron_right</mat-icon>
+
+        <span>{{ item?.key }}</span>
+
+    </div>
+
+    <section class="issue-header">
+
+        <div class="issue-header-main">
+            
+            <div class="issue-type-icon">
+                <mat-icon>bug_report</mat-icon>
+            </div>
+
+            <div class="issue-title">
+
+                <div class="issue-key">
+                    {{ item?.key }}
+                </div>
+
+                <h1>{{ item?.summary }}</h1>
+
+            </div>
+
+        </div>
+
+        <div class="header-actions">
+            <button
+                mat-flat-button
+                class="edit-button"
+                (click)="openEditIssueDialog()"
+            >
+                <mat-icon>edit</mat-icon>
+                Edit Issue
+            </button>
+        </div>
+
+    </section>
+
+    <section class="issue-meta">
+
+        <div class="meta-item">
+
+            <span class="meta-label">
+                Status
+            </span>
+
+            <span 
+                class="status-badge"
+                [class.todo]="item?.status === 'Todo'"
+                [class.in-progress]="item?.status === 'In Progress'"
+                [class.in-review]="item?.status === 'In Review'"
+                [class.done]="item?.status === 'Done'"
+            >
+                {{ item?.status }}
+            </span>
+
+        </div>
+
+        <div class="meta-item">
+
+            <span class="meta-label">
+                Type
+            </span>
+
+            <span 
+                class="type-badge"
+                [class.issue-type-bug]="item?.type === 'Bug'"
+                [class.issue-type-story]="item?.type === 'Story'"
+                [class.issue-type-task]="item?.type === 'Task'"
+                [class.issue-type-epic]="item?.type === 'Epic'"
+            >
+                {{ item?.type }}
+            </span>
+
+        </div>
+
+        <div class="meta-item">
+
+            <span class="meta-label">
+                Priority
+            </span>
+
+            <span class="priority-value" [ngClass]="item?.priority | lowercase">
+                <mat-icon>
+                    @switch (item?.priority) {
+                        @case ('Lowest') {
+                            arrow_downward
+                        }
+                        @case ('Low') {
+                            arrow_downward
+                        }
+                        @case ('Medium') {
+                            remove
+                        }
+                        @case ('High') {
+                            arrow_upward
+                        }
+                        @case ('Highest') {
+                            arrow_upward
+                        }
+                    }
+                </mat-icon>
+                {{ item?.priority }}
+            </span>
+
+        </div>
+
+        <div class="meta-label">
+
+            <span class="meta-label">
+                Assignee
+            </span>
+
+            @if (assignedUser) {
+                <div class="user-cell">
+
+                    <app-avatar
+                        [url]="assignedUser.avatarUrl"
+                        [name]="assignedUser.fullName"
+                        [size]="'md'"
+                    />
+
+                    <span>
+                        {{ assignedUser.fullName }}
+                    </span>
+
+                </div>
+            } @else {
+                <span>
+                    Unassigned
+                </span>
+            }
+
+        </div>
+
+    </section>
+
+    <mat-tab-group class="issue-tabs">
+
+        <mat-tab label="Details">
+
+            <div class="details-layout">
+
+                <section class="details-card">
+
+                    <h2>
+                        Description
+                    </h2>
+
+                    <p class="description">
+                        {{ item?.description }}
+                    </p>
+
+                </section>
+
+                <section class="details-card">
+
+                    <h2>
+                        Issue information
+                    </h2>
+
+                    <div class="information-list">
+
+                        <div class="information-row">
+
+                            <span>
+                                Key
+                            </span>
+
+                            <strong>
+                                {{ item?.key }}
+                            </strong>
+
+                        </div>
+
+                        <div class="information-row">
+
+                            <span>
+                                Project
+                            </span>
+
+                            <strong>
+                                {{ project()?.name }}
+                            </strong>
+
+                        </div>
+
+                        <div class="information-row">
+
+                            <span>
+                                Reporter
+                            </span>
+
+                            <div class="user-cell">
+
+                                @if (reporterUser; as user) {
+                                    <app-avatar
+                                        [url]="reporterUser.avatarUrl"
+                                        [name]="reporterUser.fullName"
+                                    />
+                                }
+
+                                <strong>
+                                    {{ reporterUser?.fullName }}
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="information-row">
+                            
+                            <span>
+                                Created
+                            </span>
+
+                            <strong>
+                                {{ item?.createdAt | date:'MMM d, y, h:mm a' }}
+                            </strong>
+
+                        </div>
+
+                        <div class="information-row">
+
+                            <span>
+                                Updated
+                            </span>
+
+                            <strong>
+                                {{ item?.updatedAt | date:'MMM d, y, h:mm a' }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+            </div>
+
+        </mat-tab>
+
+        <mat-tab label="Comments">
+
+            <div class="comments-container">
+
+                <div class="add-comment">
+
+                    @if (currentUserService.currentUser(); as user) {
+                        <app-avatar
+                            [url]="user.avatarUrl"
+                            [name]="user.fullName"
+                            [size]="'lg'"
+                        />
+                    }
+
+                    <mat-form-field
+                        appearance="outline"
+                        class="comment-input"
+                    >
+
+                        <textarea
+                            matInput
+                            [formControl]="commentControl"
+                            placeholder="Add a comment..."
+                            rows="2"
+                        ></textarea>
+
+                    </mat-form-field>
+
+                    <button
+                        mat-flat-button
+                        class="comment-button"
+                        [disabled]="commentControl.invalid"
+                        (click)="addComment()"
+                    >
+                        Comment
+                    </button>
+
+                </div>
+
+                <div class="comment-list">
+
+                    @let commentList = comments();
+                    <h2>
+                        Comments ({{ commentList.length }})
+                    </h2>
+
+                    @for (comment of commentList; track comment.id) {
+
+                        @let author = getUser(comment.authorId);
+
+                        <article class="comment">
+
+                            @if (author) {
+
+                                <app-avatar
+                                    [url]="author.avatarUrl"
+                                    [name]="author.fullName"
+                                    [size]="'lg'"
+                                />
+                            }
+
+                            <div class="comment-body">
+                                
+                                <div class="comment-header">
+                                    
+                                    <strong>
+                                        {{ author?.fullName }}
+                                    </strong>
+
+                                    <span>
+                                        {{ comment.createdAt | date:'d MMM, y, h:mm a' }}
+                                    </span>
+
+                                </div>
+
+                                <p>
+                                    {{ comment.text }}
+                                </p>
+
+                            </div>
+
+                        </article>
+                    } @empty {
+                        <div class="empty-comments">
+                            No comments yet.
+                        </div>
+                    }
+
+                </div>
+
+            </div>
+
+        </mat-tab>
+
+    </mat-tab-group>
+    
+</div>

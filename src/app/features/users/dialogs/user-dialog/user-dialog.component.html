@@ -1,0 +1,118 @@
+<h2 mat-dialog-title class="dialog-title">Create User</h2>
+
+<button
+    type="button"
+    class="close-button"
+    mat-icon-button
+    mat-dialog-close
+    aria-label="Close dialog"
+>
+    <mat-icon>close</mat-icon>
+</button>
+
+<form [formGroup]="form" (ngSubmit)="createUser()">
+    <mat-dialog-content>
+        <mat-form-field 
+            appearance="outline" 
+            class="form-field"
+        >
+            <mat-label>Full name</mat-label>
+
+            <input
+                matInput
+                formControlName="fullName"
+                placeholder="John Doe"
+                autocomplete="name"
+            />
+
+            @if (form.controls.fullName.hasError('required')) {
+                <mat-error>
+                    Full name is required.
+                </mat-error>
+            }
+
+            @if (form.controls.fullName.hasError('maxlength')) {
+                <mat-error>
+                    Name cannot exceed 100 characters.
+                </mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field 
+            appearance="outline" 
+            class="form-field"
+        >
+            <mat-label>Email</mat-label>
+
+            <input
+                matInput
+                type="email"
+                formControlName="email"
+                placeholder="john.doe@example.com"
+                autocomplete="email"
+            />
+
+            @if (form.controls.email.hasError('required')) {
+                <mat-error>
+                    Email is required
+                </mat-error>
+            }
+
+            @if (form.controls.email.hasError('email')) {
+                <mat-error>
+                    Enter a valid email address.
+                </mat-error>
+            }
+
+            @if (form.controls.email.hasError('maxlength')) {
+                <mat-error>
+                    Email cannot exceed 254 characters.
+                </mat-error>
+            }
+        </mat-form-field>
+
+        <mat-form-field 
+            appearance="outline" 
+            class="form-field"
+        >
+            <mat-label>Avatar URL</mat-label>
+
+            <input
+                matInput
+                type="url"
+                formControlName="avatarUrl"
+                placeholder="https://example.com/avatar.jpg"
+            />
+
+            @if (form.controls.avatarUrl.hasError('maxlength')) {
+                <mat-error>
+                    Avatar URL cannot exceed 2048 cahracters.
+                </mat-error>
+            }
+
+            <mat-hint>
+                Optional. You can add an avatar later
+            </mat-hint>
+        </mat-form-field>
+    </mat-dialog-content>
+
+    <mat-dialog-actions align="end" class="dialog-actions">
+        <button
+            type="button"
+            mat-button
+            class="cancel-button"
+            (click)="cancel()"
+        >
+            Cancel
+        </button>
+
+        <button
+            type="submit"
+            mat-flat-button
+            class="create-button"
+            [disabled]="form.invalid"
+        >
+            Create User
+        </button>
+    </mat-dialog-actions>
+</form>

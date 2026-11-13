@@ -1,0 +1,23 @@
+@use '../../styles/mixins' as mixins;
+
+.projects-page {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+tr.mat-mdc-row {
+    @include mixins.clickable-table-row;
+}
+
+.mat-mdc-table {
+    background: #fefefe;
+}
+
+.table-footer {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+
+    padding: 8px 4px;
+}

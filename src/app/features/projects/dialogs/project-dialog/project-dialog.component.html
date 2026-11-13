@@ -1,0 +1,154 @@
+<h2 mat-dialog-title class="dialog-title">
+    {{ isEditMode ? 'Edit Project' : 'Create Project' }}
+</h2>
+
+<button
+    type="button"
+    class="close-button"
+    mat-icon-button
+    mat-dialog-close
+    aria-label="Close dialog"
+>
+     <mat-icon>close</mat-icon>
+</button>
+
+<form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+>
+
+    <mat-dialog-content>
+
+        <mat-form-field
+            appearance="outline"
+            class="form-field"
+        >
+            <mat-label>Key</mat-label>
+
+            <input
+                matInput
+                formControlName="key"
+                maxLength="10"
+                placeholder="WEB"
+            />
+
+            @if (form.controls.key.hasError('required')) {
+                <mat-error>
+                    Project key is required.
+                </mat-error>
+            }
+
+            @if (form.controls.key.hasError('pattern')) {
+                <mat-error>
+                    Use 2-10 uppercase letter.
+                </mat-error>
+            }
+
+            @if (isEditMode) {
+                <mat-hint>
+                    Project key cannot be changed.
+                </mat-hint>
+            } @else {
+                <mat-hint [hidden]="!(!form.controls.key.touched || form.controls.key.valid)">
+                    Project key must be unique (2-10 uppercase letters).
+                </mat-hint>
+            }
+        
+        </mat-form-field>
+
+        <mat-form-field
+            appearance="outline"
+            class="form-field"
+        >
+            <mat-label>Name</mat-label>
+
+            <input
+                matInput
+                formControlName="name"
+                placeholder="Website Redesign"
+            />
+
+            @if (form.controls.name.hasError('required')) {
+                <mat-error>
+                    Project name is required.
+                </mat-error>
+            }
+
+        </mat-form-field>
+
+        <mat-form-field
+            appearance="outline"
+            class="form-field"
+        >
+            
+            <mat-label>Description</mat-label>
+
+            <textarea
+                matInput
+                formControlName="description"
+                rows="3"
+                placeholder="Redesign and improve the corporate website"
+            ></textarea>
+
+        </mat-form-field>
+
+        <mat-form-field
+            appearance="outline"
+            class="form-field"
+        >
+            <mat-label>Lead</mat-label>
+
+            <mat-select formControlName="leadId">
+
+                @for (user of data.users; track user.id) {
+                    <mat-option [value]="user.id">
+
+                        <div class="user-option">
+
+                            <app-avatar
+                                [url]="user.avatarUrl"
+                                [name]="user.fullName"
+                                [size]="'lg'"
+                            />
+
+                            <span>{{ user.fullName }}</span>
+
+                        </div>
+                        
+                    </mat-option>
+                }
+
+            </mat-select>
+
+            @if (form.controls.leadId.hasError('required')) {
+                <mat-error>
+                    Project lead is required.
+                </mat-error>
+            }
+
+        </mat-form-field>
+
+    </mat-dialog-content>
+
+    <mat-dialog-actions algin="end" class="dialog-actions">
+
+        <button
+            type="button"
+            mat-button
+            class="cancel-button"
+            (click)="cancel()"
+        >
+            Cancel
+        </button>
+        
+        <button
+            type="submit"
+            mat-flat-button
+            class="create-button"
+            [disabled]="form.invalid"
+        >
+            {{ isEditMode ? 'Update Project' : 'Create Project' }}
+        </button>
+
+    </mat-dialog-actions>
+</form>

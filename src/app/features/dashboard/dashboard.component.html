@@ -1,0 +1,192 @@
+<div class="dashboard">
+
+    <div class="page-header">
+        <h2>Dashboard</h2>
+    </div>
+
+    <section class="statistics">
+        @for (stat of statistics; track stat.label) {
+            <div class="stat-card">
+                <div class="stat-content">
+                    <span class="stat-label">
+                        {{ stat.label }}
+                    </span>
+
+                    <span class="stat-value">
+                        {{ stat.value() }}
+                    </span>
+
+                    @if (stat.linkText) {
+                        <a
+                            class="stat-link"
+                            [routerLink]="stat.link">
+                            {{ stat.linkText }}
+                        </a>
+                    }
+
+                </div>
+                    @if (stat.icon) {
+                        <div
+                            class="stat-icon"
+                            [class]="stat.iconClass">
+                            <mat-icon>{{ stat.icon }}</mat-icon>
+                        </div>
+                    }
+            </div>
+        }
+    </section>
+
+    <section class="dashboard-grid">
+        
+        <div class="dashboard-card">
+
+            <div class="card-header">
+                <h2>Recent Projects</h2>
+            </div>
+
+            <div class="project-list">
+
+                @for (project of recentProjects(); track project.id) {
+                    <a 
+                        class="project-item"
+                        [routerLink]="['/projects', project.id]">
+
+                        <div class="project-icon">
+                            <mat-icon>
+                                workspaces
+                            </mat-icon>
+                        </div>
+
+                        <div class="project-info">
+
+                            <div class="project-key">
+                                {{ project.key }}
+                            </div>
+
+                            <div class="project-name">
+                                {{ project.name }}
+                            </div>
+
+                            @if (project.description) {
+                                <div class="project-description">
+                                    {{ project.description }}
+                                </div>
+                            }
+
+                            <div class="project-issues">
+                                {{ project.issueCount }} issues 
+                            </div>
+                        </div>
+
+                    </a>
+                }
+
+            </div>
+
+            <a
+                class="view-all-link"
+                routerLink="/projects">
+                View all projects
+            </a>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <div class="card-header">
+                <h2>Recent Issues</h2>
+            </div>
+
+            <div class="issue-list">
+
+                @for (issue of recentIssues(); track issue.id) {
+
+                    <a 
+                        class="issue-item"
+                        [routerLink]="['/issues', issue.id]">
+                        <div class="issue-type-icon">
+                            <mat-icon>task_alt</mat-icon>
+                        </div>
+
+                        <span class="issue-key">
+                            {{ issue.key }}
+                        </span>
+
+                        <span class="issue-summary">
+                            {{ issue.summary }}
+                        </span>
+
+                        <span 
+                            class="issue-status"
+                            [class]="getStatusClass(issue.status)">
+                            {{ issue.status }}
+                        </span>
+                    </a>
+
+                }
+
+            </div>
+
+            <a
+                class="view-all-link"
+                routerLink="/issues">
+                View all issues
+            </a>
+
+        </div>
+
+    </section>
+
+    <section class="dashboard-card activity-card">
+
+        <div class="card-header">
+            <h2>Activity Feed</h2>
+        </div>
+
+        <div class="activity-list">
+
+            @for (activity of activities(); track activity.id) {
+
+                <div class="activity-item">
+
+                    <app-avatar 
+                        [url]="activity.avatarUrl" 
+                        [name]="activity.userName"
+                        [size]="'sm'"
+                    />
+
+                    <div class="activity-content">
+
+                        <div class="activity-text">
+
+                            <strong>
+                                {{ activity.userName }}
+                            </strong>
+
+                            {{ activity.action }}
+
+                            <a
+                                [routerLink]="['/issues', activity.issueId]"
+                                class="activity-issue">
+                                {{ activity.issueKey }}
+                                @if(activity.issueSummary) {
+                                     - {{ activity.issueSummary }}
+                                }
+                            </a>
+
+                        </div>
+
+                        <div class="activity-time">
+                              {{ activity.occurredAt | relativeTime }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            }
+
+        </div>
+
+    </section>
+</div>

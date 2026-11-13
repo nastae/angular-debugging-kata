@@ -1,0 +1,67 @@
+:host {
+    display: block;
+    position: relative;
+}
+
+mat-dialog-content {
+    padding: 8px 20px 16px !important;
+}
+
+.delete-content {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.warning-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 80px;
+    width: 80px;
+    height: 90px;
+
+    background: #fff0ef;
+    border-radius: 6px;
+
+    mat-icon {
+        width: 34px;
+        height: 34px;
+
+        font-size: 34px;
+        color: #de2f2f;
+    }
+}
+
+.message {
+    min-width: 0;
+}
+
+.question {
+    margin: 0;
+
+    font-size: 16px;
+    line-height: 20px;
+    font-weight: 500;
+}
+
+.warning {
+    margin: 8px 0 0;
+
+    font-size: 15px;
+    line-height: 18px;
+}
+
+.delete-button {
+    min-width: 110px;
+    height: 36px;
+
+    background: #d92d20 !important;
+    color: #fff !important;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    border-radius: 4px;
+}

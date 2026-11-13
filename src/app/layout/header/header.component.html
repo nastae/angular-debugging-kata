@@ -1,0 +1,49 @@
+@if (currentUserService.currentUser(); as user) {
+    <header class="toolbar">
+
+        <button mat-icon-button>
+            <mat-icon>
+                menu
+            </mat-icon>
+        </button>
+
+        <span class="spacer"></span>
+
+        <mat-form-field
+            appearance="outline"
+            class="search-field">
+
+            <mat-icon matPrefix>
+                search
+            </mat-icon>
+
+            <input
+                matInput
+                placeholder="Search issues..." 
+            />
+        </mat-form-field>
+
+        <button
+            mat-icon-button
+            matBadge="1"
+            matBadgeColor="warn">
+
+            <mat-icon>
+                notifications_none
+            </mat-icon>
+        </button>
+
+        <div class="user">
+           
+            <app-avatar
+                [url]="user.avatarUrl"
+                [name]="user.fullName"
+                [size]="'xl'"
+            />
+
+            <span>
+                {{ user.fullName }}
+            </span>
+        </div>
+    </header>
+}

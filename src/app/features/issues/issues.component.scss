@@ -1,0 +1,40 @@
+@use '../../styles/mixins' as mixins;
+
+.issue-filters {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+    flex-wrap: wrap;
+
+    margin-bottom: 16px;
+}
+
+.issue-filters mat-form-field {
+    width: 180px;
+}
+
+.issue-filters button {
+    margin-top: -18px;
+}
+
+.filter-field {
+    --mat-form-field-container-height: 40px;
+    --mat-form-field-container-vertical-padding: 8px;
+}
+
+.table-footer {
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, 0.6);
+
+    padding: 8px 4px;
+}
+
+tr.mat-mdc-row {
+    @include mixins.clickable-table-row;
+}
+
+::ng-deep .key-column {
+    width: 100px;
+    min-width: 100px;
+}

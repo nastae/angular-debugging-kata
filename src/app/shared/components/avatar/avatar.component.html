@@ -1,0 +1,24 @@
+@let imageUrl = url();
+@if (imageUrl) {
+    <img
+        class="avatar-image" 
+        [class.avatar-xs]="size() === 'xs'"
+        [class.avatar-sm]="size() === 'sm'"
+        [class.avatar-md]="size() === 'md'"
+        [class.avatar-lg]="size() === 'lg'"
+        [class.avatar-xl]="size() === 'xl'"
+        [src]="imageUrl" 
+        [alt]="name()"
+    />
+} @else {
+    <div 
+        class="user-avatar-fallback"
+        [class.fallback-xs]="size() === 'xs'"
+        [class.fallback-sm]="size() === 'sm'"
+        [class.fallback-md]="size() === 'md'"
+        [class.fallback-lg]="size() === 'lg'"
+        [class.fallback-xl]="size() === 'xl'"
+    >
+        {{ name() | initials }}
+    </div>
+}

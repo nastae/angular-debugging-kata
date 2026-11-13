@@ -1,0 +1,31 @@
+:host {
+    display: block;
+    position: relative;
+}
+
+.form-field {
+    margin-bottom: 8px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.user-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dialog-actions {
+    padding: 8px 20px 20px !important;
+}
+
+@media (max-width: 600px) {
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}

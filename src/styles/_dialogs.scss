@@ -1,0 +1,16 @@
+@use './_variables.scss' as vars; 
+
+.dialog-title {
+    margin: 0 !important;
+    padding: 20px 20px 12px !important;
+
+    font-size: 18px !important;
+    line-height: 24px !important;
+    font-weight: 600 !important;
+    color: vars.$app-title-text !important;
+}
+
+.dialog-actions {
+    gap: 8px !important;
+    padding: 8px 16px 16px !important;
+}

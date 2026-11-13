@@ -1,0 +1,26 @@
+.pagination-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 16px;
+}
+
+.pagination-info {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 14px;
+    font-weight: 400;
+}
+
+.pagination-actions {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.pagination-actions button {
+    color: #475569;
+}
+
+.pagination-actions button:disabled {
+    color: #cbd5e1;
+}

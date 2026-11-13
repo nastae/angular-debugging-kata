@@ -1,0 +1,43 @@
+.toolbar {
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+
+    padding: 0 24px;
+
+    background: #ffffff;
+
+    border-bottom: 1px solid #e5e7eb;
+
+    box-sizing: border-box;
+}
+
+.spacer {
+    flex: 1;
+}
+
+.search-field {
+    width: 320px;
+    margin: 0;
+    margin-right: 20px;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+    background-color: red !important;
+    padding: 50px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    
+    gap: 12px;
+
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+mat-icon {
+    color: #4b5563;
+}
