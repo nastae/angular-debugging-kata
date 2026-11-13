@@ -1,6 +1,6 @@
-# Exercise 3: Fix Users Search
+# Exercise 2: Fix Users Search
 
-- **Branch**: exercise-3
+- **Branch**: exercise-2
 - **Difficulty**: Beginner
 - **Topic**: Angular Signals and JavaScript Array Filtering
 
