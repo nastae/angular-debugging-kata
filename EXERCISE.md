@@ -5,7 +5,7 @@
 **Topic**: JavaScript Array Filtering
 
 ## Issue
-The Dashboard displays an incorrect number of issues for each project on recent projects view.
+The Dashboard displays an incorrect number of issues for each project in the **Recent Projects** section.
 
 For example, if the Analytics Dashboard project has 10 issues, its dashboard card should display 10 issues.
 
