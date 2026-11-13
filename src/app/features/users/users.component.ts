@@ -59,7 +59,7 @@ export class UsersComponent {
         ...user,
 
         assignedIssueCount: issues.filter(
-          issue => issue.reporterId === user.id
+          issue => issue.assigneeId === user.id
         ).length,
 
         createdAt: undefined
