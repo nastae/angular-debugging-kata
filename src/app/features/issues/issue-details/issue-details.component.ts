@@ -102,7 +102,7 @@ export class IssueDetailsComponent {
       this.comments.set(comments);
 
       this.commentAuthors.set(
-        new Map(users.map(user => [user.id, user]))
+        new Map(users.map(user => [user.fullName, user]))
       );
     });
   }
