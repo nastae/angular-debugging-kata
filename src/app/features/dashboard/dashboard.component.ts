@@ -122,7 +122,7 @@ export class DashboardComponent {
 
     return projects.map(project => ({
       ...project,
-      issueCount: issues.filter(issue => issue.projectId === project.id).length
+      issueCount: issues.filter(issue => issue.projectId !== project.id).length
     }));
   });
 
