@@ -88,7 +88,7 @@ export class UsersComponent {
             user.fullName.toLowerCase().includes(search) ||
             user.email.toLowerCase().includes(search);
 
-            if (!matchesSearch) {
+            if (matchesSearch) {
               return false;
             }
         }
