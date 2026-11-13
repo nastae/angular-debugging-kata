@@ -1,8 +1,8 @@
 # Exercise 3: Fix Users Search
 
-**Branch**: exercise-3
-*Difficulty**: Beginner
-**Topic**: Angular Signals and JavaScript Array Filtering
+- **Branch**: exercise-3
+- **Difficulty**: Beginner
+- **Topic**: Angular Signals and JavaScript Array Filtering
 
 ## Problem
 The search field on the Users page does not work correctly.
