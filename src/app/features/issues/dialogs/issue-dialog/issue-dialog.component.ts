@@ -60,6 +60,7 @@ export class IssueDialogComponent {
     summary: [
       this.data.issue?.summary ?? '',
       [
+        Validators.required,
         Validators.maxLength(200)
       ]
     ],
