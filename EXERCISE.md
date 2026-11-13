@@ -1,8 +1,8 @@
 # Exercise 1: Fix Project Issue Counts
 
-**Branch**: exercise-1
-**Difficulty**: Beginner
-**Topic**: JavaScript Array Filtering
+- **Branch**: exercise-1
+- **Difficulty**: Beginner
+- **Topic**: JavaScript Array Filtering
 
 ## Issue
 The Dashboard displays an incorrect number of issues for each project in the **Recent Projects** section.
