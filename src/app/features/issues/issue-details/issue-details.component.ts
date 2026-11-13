@@ -114,7 +114,7 @@ export class IssueDetailsComponent {
   addComment(): void {
     const body = this.commentControl.value.trim();
 
-    if (!body || !this.issue) {
+    if (!body || !this.issue()) {
       this.commentControl.markAsTouched();
       return;
     }
