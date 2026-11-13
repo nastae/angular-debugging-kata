@@ -111,4 +111,9 @@ Use the corresponding answer branch for each exercise (for example, exercise-2-a
 
 Try solving the exercises yourself before looking at the answers.
 
+# License
+
+This project is licensed under the [MIT License](https://opensource.org/license/mit/).
+See the [LICENSE](LICENSE) file for details.
+
 # Have fun debugging!
